@@ -106,10 +106,13 @@ public class GerenciarConsultaBean {
                     }
                     exame = new Exame(sessao.getPaciente(), sessao.getCliente(), sessao.getMedico());
                     tratamento.setSolicitaExame(Boolean.TRUE);
-                    banco.getExames().add(exame);
+                    tratamento.getExames().add(exame);
                     System.out.println("Exame solicitado com sucesso");
                     break;
                 case 2:
+                    if(sessao.getDiagnostico() != null){
+                        System.out.println("Diagnostico já foi dado");
+                    }
                     System.out.println(medico.getNome() + ", informe seu diagnóstico.");
                     sessao.setDiagnostico(sc.nextLine());
                     System.out.println("Qual o gráu de grávidade?");
@@ -121,6 +124,7 @@ public class GerenciarConsultaBean {
                     if (sessao.getGravidade() == Sessao.getGRAVIDADE_BAIXA() && !sessao.isExamePendente()) {
                         if(!sessao.isExamePendente()){
                             System.out.println("outra sessão necessária, para trazer resultado do exame");
+                            break;
                         }
                         tratamento.setConcluido(Boolean.TRUE);
                         System.out.println("Tratamento finalizado");

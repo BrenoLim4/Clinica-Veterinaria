@@ -7,7 +7,7 @@ package clinicaveterinaria.Beans;
 
 /**
  *
- * @author 99039833
+ * @author Breno Lima
  */
 public class ExamesBean {
     
