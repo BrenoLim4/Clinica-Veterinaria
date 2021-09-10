@@ -27,9 +27,9 @@ public class ClinicaVeterinaria {
         banco = getInstanceBancoDeDados();
         menu = new MenusInterativos(banco);
         do {
-            System.out.println("Selecione o tipo de usuÃ¡rio"
-                    + "\n[1] - SecretÃ¡ria"
-                    + "\n[2] - MÃ©dico"
+            System.out.println("Selecione o tipo de usuário"
+                    + "\n[1] - Secretária"
+                    + "\n[2] - Médico"
                     + "\n[3] - Cliente");
             setTipoUsuario(sc.nextInt());
             switch (tipoUsuario) {
@@ -37,6 +37,7 @@ public class ClinicaVeterinaria {
                     menu.menuSecretaria("Maria"); 
                     break;
                 case USUARIO_MEDICO:
+                    sc.nextLine();
                     menu.menuMedico();
                     break;
                 case USUARIO_CLIENTE:
@@ -46,7 +47,7 @@ public class ClinicaVeterinaria {
         } while (true);
     }
 
-//<editor-fold defaultstate="collapsed" desc="Medoto setar tipo usuÃ¡rio">
+//<editor-fold defaultstate="collapsed" desc="Medoto setar tipo usuário">
     private static void setTipoUsuario(int tipoUsuario) {
         switch (tipoUsuario) {
             case USUARIO_SECRETARIA:
@@ -59,12 +60,12 @@ public class ClinicaVeterinaria {
                 ClinicaVeterinaria.tipoUsuario = USUARIO_CLIENTE;
                 break;
             default:
-                System.out.println("Nenhum usuÃ¡rio correspondente");
+                System.out.println("Nenhum usuário correspondente");
         }
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Pegar InstÃ¢ncia do Banco de Dados">    
+//<editor-fold defaultstate="collapsed" desc="Pegar Instância do Banco de Dados">    
     private static BancoDeDados getInstanceBancoDeDados() {
         AbrirBd bd = new AbrirBd();
         if (bd.verificar()) {
