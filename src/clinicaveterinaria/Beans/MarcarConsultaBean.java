@@ -44,7 +44,7 @@ public class MarcarConsultaBean {
 
         if (verificar == CLIENTE || verificar == PACIENTE) {
             if (verificar == CLIENTE) {
-                System.out.println("Deseja cadastrar o cliente? [1] - Sim / [2] - N√£o");
+                System.out.println("Deseja cadastrar o cliente? [1] - Sim / [2] - N„o");
                 opcao = sc.nextInt();
                 sc.nextLine();
                 switch (opcao) {
@@ -60,14 +60,14 @@ public class MarcarConsultaBean {
                         animal = cadastro.getAnimal();
                         break;
                     case 2:
-                        return "Consulta n√£o finalizada";
+                        return "Consulta n„o finalizada";
                     default:
-                        System.out.println("Op√ß√£o inv√°lida");
-                        return "Consulta n√£o finalizada";
+                        System.out.println("OpÁ„o inv·lida");
+                        return "Consulta n„o finalizada";
                 }
                 
             } else {
-                System.out.println("Deseja cadastrar o paciente? [1] - Sim / [2] - N√£o");
+                System.out.println("Deseja cadastrar o paciente? [1] - Sim / [2] - N„o");
                 opcao = sc.nextInt();
                 switch (opcao) {
                     case 1:
@@ -77,15 +77,15 @@ public class MarcarConsultaBean {
                         animal = cadastro.getAnimal();
                         break;
                     case 2:
-                        return "Consulta n√£o finalizada";
+                        return "Consulta n„o finalizada";
                     default:
-                        System.out.println("Op√ß√£o inv√°lida");
-                        return "Consulta n√£o finalizada";
+                        System.out.println("OpÁ„o inv·lida");
+                        return "Consulta n„o finalizada";
                 }
             }
         }
         if (verificarErroInformacoesPessoais(MEDICO) == MEDICO) {
-            System.out.println("Deseja cadastrar o m√©dico? [1] - Sim / [2] - N√£o");
+            System.out.println("Deseja cadastrar o mÈdico? [1] - Sim / [2] - N„o");
             opcao = sc.nextInt();
             sc.nextLine();
             switch (opcao) {
@@ -95,10 +95,10 @@ public class MarcarConsultaBean {
                     medico = cadastro.getMedico();
                     break;
                 case 2:
-                    return "Consulta n√£o finalizada";
+                    return "Consulta n„o finalizada";
                 default:
-                    System.out.println("Op√ß√£o inv√°lida");
-                    return "Consulta n√£o finalizada";
+                    System.out.println("OpÁ„o inv·lida");
+                    return "Consulta n„o finalizada";
             }
         }
         Sessao sessao = new Sessao(cliente, animal, medico);
@@ -117,7 +117,7 @@ public class MarcarConsultaBean {
             
             try {
                 if(format.parse(dataAgendada).before(Date.from(Instant.now()))){
-                    System.out.println("Data da consulta, n√£o pode ser anterior a data atual.");
+                    System.out.println("Data da consulta, n„o pode ser anterior a data atual.");
                 }else{
                     sessao.setDataMarcada(format.parse(dataAgendada));
                 }
@@ -125,16 +125,16 @@ public class MarcarConsultaBean {
                 Logger.getLogger(MarcarConsultaBean.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            } while(sessao.getDataMarcada() != null);
+            } while(sessao.getDataMarcada() == null);
             
             sessao.setStatus(Sessao.getSTATUS_REGISTRADA()); 
             banco.getSessoes().add(sessao);
-            retorno = "Primeira sess√£o marcada com sucesso " + (sessao.getDataMarcada() == null ? "Data n√£o foi informadada" : "para o dia: "+ sessao.getDataMarcada().toString());
+            retorno = "Primeira sess„o marcada com sucesso " + (sessao.getDataMarcada() == null ? "Data n„o foi informadada" : "para o dia: "+ sessao.getDataMarcada().toString());
         } else {
             tratamento = validar.getTratamento();
             
             if(validar.seassaoAnteriorConcluida(tratamento) == false){
-                return "N√£o foi poss√≠vel marcar uma nova consulta, anterior ainda est√° pendente.";
+                return "N„o foi possÌvel marcar uma nova consulta, anterior ainda est· pendente.";
             }    
             System.out.println("Digite a data do Agendamento: formato[DD/MM/AAAA]");
             dataAgendada = sc.nextLine();
@@ -149,12 +149,12 @@ public class MarcarConsultaBean {
             }
             banco.getSessoes().add(sessao);
             tratamento.getSessoes().add(sessao);
-            retorno = String.valueOf(tratamento.getSessoes().size()) + "¬™ sess√£o, marcada com sucesso, dia " + sessao.getDataMarcada().toString();
+            retorno = String.valueOf(tratamento.getSessoes().size()) + "™ sess„o, marcada com sucesso, dia " + sessao.getDataMarcada().toString();
         }
         return retorno;
     }
 
-//<editor-fold defaultstate="collapsed" desc="metodo para verifica Erro das informa√ß√µes">
+//<editor-fold defaultstate="collapsed" desc="metodo para verifica Erro das informaÁıes">
     public int verificarErroInformacoesPessoais(int tipoVerificao) {
         try{
         if (tipoVerificao == CLIENTE) {
@@ -169,22 +169,22 @@ public class MarcarConsultaBean {
             System.out.println("Cpf: (Somente numeros)");
             cliente.setCpf(sc.nextLine());
             if (!validar.verificarCliente()) {
-                System.out.println("Cliente n√£o est√° cadastrado no Sistema");
+                System.out.println("Cliente n„o est· cadastrado no Sistema");
                 return CLIENTE;
             }
             System.out.println("Cliente encontrado");
             System.out.println("Dados do Animal");
             System.out.println("Nome: ");
             animal.setNome(sc.nextLine());
-            System.out.println("Ra√ßa: ");
+            System.out.println("RaÁa: ");
             animal.setRaca(sc.nextLine());
             System.out.println("Sexo: "
                     + "\n[1] - macho"
-                    + "\n[2] - F√™mea");
+                    + "\n[2] - FÍmea");
             animal.setSexo(sc.nextInt());
             sc.nextLine();
             if (!validar.verificarAnimal()) {
-                System.out.println("Animal n√£o cadastrado no Sistema");
+                System.out.println("Animal n„o cadastrado no Sistema");
                 return PACIENTE;
             }
             cliente = validar.getCliente();
@@ -192,13 +192,13 @@ public class MarcarConsultaBean {
         } else if (tipoVerificao == MEDICO) {
             medico = new Medico();
             validar.setMedico(medico);            
-            System.out.println("Informe os dados do m√©dico, que realizar√° √† consulta");
+            System.out.println("Informe os dados do mÈdico, que realizar· ‡ consulta");
             System.out.println("Nome: ");
             medico.setNome(sc.nextLine());
-            System.out.println("cpf: (Somente n√∫meros)");
+            System.out.println("cpf: (Somente n˙meros)");
             medico.setCpf(sc.nextLine());
             if (!validar.verificarMedico()) {
-                System.out.println("Nenhum M√©dico encontrado");
+                System.out.println("Nenhum MÈdico encontrado");
                 return MEDICO;
             }
             medico = validar.getMedico();
