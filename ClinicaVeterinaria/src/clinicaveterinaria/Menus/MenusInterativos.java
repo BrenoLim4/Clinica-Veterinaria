@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clinicaveterinaria.Menus;
 
 import clinicaveterinaria.Beans.CadastroBean;
@@ -53,7 +48,7 @@ public class MenusInterativos {
                     + "\n[4] - Cadastrar Médico"
                     + "\n[5] - Atualizar Cadastro"
                     + "\n[6] - Sair");
-            buttom = sc.nextInt();
+             buttom = sc.nextInt();
             CadastroBean cadastro = null;
             if (buttom >= CADASTRAR_CLIENTE && buttom <= CADASTRAR_MEDICO) {
                 cadastro = new CadastroBean(banco);
@@ -92,6 +87,7 @@ public class MenusInterativos {
         medico.setNome(sc.nextLine());
         System.out.println("Cpf: (Somente números)");
         medico.setCpf(sc.nextLine());
+
         if (!validar.verificarMedico()) {
             System.out.println("Nenhum Médico encontrado");
             return;
@@ -105,8 +101,9 @@ public class MenusInterativos {
                     + "\n[3] -> Consultar Lista de Pacientes"
                     + "\n[4] -> Consultar tratamentos"
                     + "\n[6] -> Sair");
-            
+
             buttom = sc.nextInt();
+
             switch(buttom){
                 case GERENCIAR_CONSULTA:
                     GerenciarConsultaBean gerenciar = new GerenciarConsultaBean(banco, medico);
@@ -119,9 +116,13 @@ public class MenusInterativos {
                     //
                 case CONSULTAR_TRATAMENTOS:
                     //
-                
-            }
-        }while(true);
+                case SAIR:
+                    System.out.println("saindo.....");
+                    break;
+                default:
+                    System.out.println("Opção inválida");
 
+            }
+        }while(buttom != 6);
     }
 }

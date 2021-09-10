@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clinicaveterinaria.Repositorio;
 
 import clinicaveterinaria.Entidades.Animal;
@@ -21,35 +16,35 @@ import java.util.Objects;
  * @author BrenoLima
  */
 public class BancoDeDados {
-    private List<Cliente>       clientes    = new ArrayList<>();
-    private List<Animal>        animais     = new ArrayList<>();
-    private List<Medico>        medicos     = new ArrayList<>();
-    private List<Sessao>        sessoes     = new ArrayList<>();
-    private List<Tratamento>    tratamentos = new ArrayList<>();
-    private List<Exame>         exames      = new ArrayList<>();
-    private List<Secretaria>    secretaria  = new ArrayList<>();
-    private static final String AcessKey    = "f8cf8644";
+    private final List<Cliente>       clientes    = new ArrayList<>();
+    private final List<Animal>        animais     = new ArrayList<>();
+    private final List<Medico>        medicos     = new ArrayList<>();
+    private final List<Sessao>        sessoes     = new ArrayList<>();
+    private final List<Tratamento>    tratamentos = new ArrayList<>();
+    private final List<Exame>         exames      = new ArrayList<>();
+    private final List<Secretaria>    secretaria  = new ArrayList<>();
+    private static final String       AcessKey    = "f8cf8644";
 
     public BancoDeDados() {        
     }    
-    
+
     public boolean verificarChaveAcesso(String AcessKey){
         return BancoDeDados.AcessKey.equals(AcessKey);
     }
-    
+
     public void salvarTratamento(Tratamento tratamento){
-        if(!tratamentos.isEmpty()){
-            int index = 0;
+        if(!tratamentos.isEmpty()){            
             for(Tratamento item : tratamentos){
                 if(item.equals(tratamento)){
-                    index = tratamentos.indexOf(item);
+                    int index = tratamentos.indexOf(item);
                     tratamentos.remove(item);
                     tratamentos.add(index, tratamento);
+                    return;
                 }
             }
         }
     }
-    
+
     public void salvarSessao(Sessao sessao){
         if(!sessoes.isEmpty()){
             for(Sessao item : sessoes){
@@ -57,17 +52,18 @@ public class BancoDeDados {
                     int index = sessoes.indexOf(item);
                     sessoes.remove(item);
                     sessoes.add(index, sessao);
+                    return;
                 }
             }
         }
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 3;
         return hash;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -102,7 +98,7 @@ public class BancoDeDados {
     }
 
     //<editor-fold defaultstate="collapsed" desc="Get's">
-    
+
     public static String getAcessKey() {
         return AcessKey;
     }
@@ -110,32 +106,32 @@ public class BancoDeDados {
     public List<Cliente> getClientes() {
         return clientes;
     }
-    
+
     public List<Animal> getAnimais() {
         return animais;
     }
-    
+
     public List<Medico> getMedicos() {
         return medicos;
     }
-    
+
     public List<Sessao> getSessoes() {
         return sessoes;
     }
-    
+
     public List<Tratamento> getTratamentos() {
         return tratamentos;
     }
-    
+
     public List<Exame> getExames() {
         return exames;
     }
-    
+
     public List<Secretaria> getSecretaria() {
         return secretaria;
     }
-    
+
 //</editor-fold>
-    
-    
+
+
 }

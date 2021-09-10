@@ -1,4 +1,3 @@
-
 package clinicaveterinaria.ValidacoesBuscas;
 
 import clinicaveterinaria.Entidades.Animal;
@@ -7,6 +6,8 @@ import clinicaveterinaria.Entidades.Medico;
 import clinicaveterinaria.EntidadesLogicas.Sessao;
 import clinicaveterinaria.EntidadesLogicas.Tratamento;
 import clinicaveterinaria.Repositorio.BancoDeDados;
+import java.time.Instant;
+import java.util.Date;
 
 /**
  *
@@ -74,12 +75,12 @@ public class Validation {
     }
 
     public boolean verificarMedico() {
-        if (!banco.getMedicos().isEmpty()) {            
+        if (!banco.getMedicos().isEmpty()) {
             for (Medico item : banco.getMedicos()) {
                 if (item.equals(this.medico)) {
                     this.medico = item;
                     return true;
-                }                
+                }
             }
         }
         return false;
@@ -89,12 +90,13 @@ public class Validation {
         if (!banco.getSessoes().isEmpty()) {
             for (Sessao sessao : banco.getSessoes()) {
                 if (sessao.equals(newSession)) {
-                    if (!banco.getTratamentos().isEmpty()) {                        
+                    if (!banco.getTratamentos().isEmpty()) {
                         for (Tratamento tratamento : banco.getTratamentos()) {
                             if (tratamento.getSessoes().contains(sessao)) {
                                 this.tratamento = tratamento;
+                                this.sessao = sessao;
                                 return false;
-                            }                            
+                            }
                         }
                     } else {
                         return true;
@@ -103,6 +105,11 @@ public class Validation {
             }
         }
         return true;
+    }
+
+    public boolean seassaoAnteriorConcluida(Tratamento tratamento) {
+        Sessao sessaoAnterior = tratamento.getSessoes().get(tratamento.getSessoes().size() - 1);
+        return sessaoAnterior.getStatus() == Sessao.getSTATUS_CANCELADA() || sessaoAnterior.getStatus() == Sessao.getSTATUS_FINALIZADA();
     }
 
     public void setCliente(Cliente cliente) {
@@ -116,7 +123,8 @@ public class Validation {
     public void setAnimal(Animal animal) {
         this.animal = animal;
     }
-    public void setTratamento(Tratamento tratamento){
+
+    public void setTratamento(Tratamento tratamento) {
         this.tratamento = tratamento;
     }
 
@@ -143,6 +151,5 @@ public class Validation {
     public Tratamento getTratamento() {
         return tratamento;
     }
-    
 
 }

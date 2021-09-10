@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clinicaveterinaria.Beans;
 
 import clinicaveterinaria.ValidacoesBuscas.Validation;
@@ -14,6 +9,8 @@ import clinicaveterinaria.EntidadesLogicas.Tratamento;
 import clinicaveterinaria.Repositorio.BancoDeDados;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,6 +45,7 @@ public class MarcarConsultaBean {
             if (verificar == CLIENTE) {
                 System.out.println("Deseja cadastrar o cliente? [1] - Sim / [2] - Não");
                 opcao = sc.nextInt();
+                sc.nextLine();
                 switch (opcao) {
                     case 1:
                         CadastroBean cadastro = new CadastroBean(banco, cliente);
@@ -66,7 +64,7 @@ public class MarcarConsultaBean {
                         System.out.println("Opção inválida");
                         return "Consulta não finalizada";
                 }
-                
+
             } else {
                 System.out.println("Deseja cadastrar o paciente? [1] - Sim / [2] - Não");
                 opcao = sc.nextInt();
@@ -88,6 +86,7 @@ public class MarcarConsultaBean {
         if (verificarErroInformacoesPessoais(MEDICO) == MEDICO) {
             System.out.println("Deseja cadastrar o médico? [1] - Sim / [2] - Não");
             opcao = sc.nextInt();
+            sc.nextLine();
             switch (opcao) {
                 case 1:
                     CadastroBean cadastro = new CadastroBean(banco, medico);
@@ -111,20 +110,34 @@ public class MarcarConsultaBean {
             tratamento = new Tratamento(sessao);
             banco.getTratamentos().add(tratamento);
             System.out.println("Novo tratamento iniciado");
+            do{
             System.out.println("Digite a data do Agendamento: formato[DD/MM/AAAA]");           
             dataAgendada = sc.nextLine();
+
             try {
-                sessao.setDataMarcada(format.parse(dataAgendada));
+                if(format.parse(dataAgendada).before(Date.from(Instant.now()))){
+                    System.out.println("Data da consulta, não pode ser anterior a data atual.");
+                }else{
+                    sessao.setDataMarcada(format.parse(dataAgendada));
+                }
             } catch (ParseException ex) {
                 Logger.getLogger(MarcarConsultaBean.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            } while(sessao.getDataMarcada() != null);
+
             sessao.setStatus(Sessao.getSTATUS_REGISTRADA()); 
             banco.getSessoes().add(sessao);
-            retorno = "Primeira consulta marcada com sucesso, para o dia " + (sessao.getDataMarcada() == null ? "não marcada" : sessao.getDataMarcada().toString());
+            retorno = "Primeira sessão marcada com sucesso " + (sessao.getDataMarcada() == null ? "Data não foi informadada" : "para o dia: "+ sessao.getDataMarcada().toString());
         } else {
             tratamento = validar.getTratamento();
+
+            if(validar.seassaoAnteriorConcluida(tratamento) == false){
+                return "Não foi possível marcar uma nova consulta, anterior ainda está pendente.";
+            }    
             System.out.println("Digite a data do Agendamento: formato[DD/MM/AAAA]");
             dataAgendada = sc.nextLine();
+
             try {
                 sessao.setDataMarcada(format.parse(dataAgendada));
             } catch (ParseException ex) {
@@ -142,7 +155,7 @@ public class MarcarConsultaBean {
 
 //<editor-fold defaultstate="collapsed" desc="metodo para verifica Erro das informações">
     public int verificarErroInformacoesPessoais(int tipoVerificao) {
-
+        try{
         if (tipoVerificao == CLIENTE) {
             cliente = new Cliente();
             animal = new Animal();
@@ -168,6 +181,7 @@ public class MarcarConsultaBean {
                     + "\n[1] - macho"
                     + "\n[2] - Fêmea");
             animal.setSexo(sc.nextInt());
+            sc.nextLine();
             if (!validar.verificarAnimal()) {
                 System.out.println("Animal não cadastrado no Sistema");
                 return PACIENTE;
@@ -187,6 +201,9 @@ public class MarcarConsultaBean {
                 return MEDICO;
             }
             medico = validar.getMedico();
+        }
+        } catch(NullPointerException np){
+            np.printStackTrace();
         }
 
         return 0;

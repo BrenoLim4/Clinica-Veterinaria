@@ -25,15 +25,16 @@ public class Buscas {
     public boolean buscarSessao() {
         if (!banco.getSessoes().isEmpty()) {
 
-            for (Sessao session : banco.getSessoes()) {
-                if (session.getCliente().getCpf().equals(sessao.getCliente().getCpf())
-                        && session.getPaciente().getNome().equalsIgnoreCase(sessao.getPaciente().getNome())
-                        && sessao.getStatus() == Sessao.getSTATUS_REGISTRADA()) {
-                    sessao = session;
-
-                    return true;
+            for (Tratamento tratamento : banco.getTratamentos()) {
+                for (Sessao session : tratamento.getSessoes()) {
+                    if (session.getCliente().getCpf().equals(sessao.getCliente().getCpf())
+                            && session.getPaciente().getNome().equalsIgnoreCase(sessao.getPaciente().getNome())
+                            && sessao.getStatus() == Sessao.getSTATUS_REGISTRADA()) {
+                        sessao = session;
+                        index = banco.getTratamentos().indexOf(sessao);
+                        return true;
+                    }
                 }
-
             }
         }
 

@@ -50,16 +50,20 @@ public class GerenciarConsultaBean {
         if (!busca.buscarSessao()) {
             return "Nenhuma sessão identificada";
         }
-
+        //se chegar até aqui é pq pegou sessão 
         sessao = busca.getSessao();
-        validar.isPrimeiraSessao(sessao);//recupera tambem o tratamento
+        if(validar.isPrimeiraSessao(sessao)){
+            return "Nenhuma sessão identificada";
+        }//recupera tambem o tratamento
+        sessao = validar.getSessao();
+        Sessao sessaoOld = sessao;
         tratamento = validar.getTratamento();
-        Integer indexSessao = busca.getIndex();//pegaIndice sessão
+
         System.out.println("Sessão iniciada");
         System.out.println("Dados da sessão");
-        sessao.toString();
+        System.out.println(sessao.toString());
         System.out.println("\n"
-                + "Registrar Sintomas");
+                + "Registrar Sintomas:");
         sessao.setSintomas(sc.nextLine());
         //VERIFICA SE A SESSÃO SOLICITA EXAME
         if (sessao.isExamePendente()) {
@@ -77,7 +81,7 @@ public class GerenciarConsultaBean {
             exame.setEncerrada(Boolean.TRUE);
             tratamento.setSolicitaExame(Boolean.FALSE);
             try {
-                tratamento.getExames().remove(index);
+                tratamento.getExames().remove(index.intValue());
                 tratamento.getExames().add(index, exame);
             } catch (NullPointerException np) {
                 System.out.println("Não foi possivel salvar o exame");
@@ -114,7 +118,10 @@ public class GerenciarConsultaBean {
                             + "\n[3] -> Grávidade Alta");
                     sessao.setGravidade(sc.nextInt());
                     sc.nextLine();
-                    if (sessao.getGravidade() == Sessao.getGRAVIDADE_BAIXA()) {
+                    if (sessao.getGravidade() == Sessao.getGRAVIDADE_BAIXA() && !sessao.isExamePendente()) {
+                        if(!sessao.isExamePendente()){
+                            System.out.println("outra sessão necessária, para trazer resultado do exame");
+                        }
                         tratamento.setConcluido(Boolean.TRUE);
                         System.out.println("Tratamento finalizado");
                     } else if (sessao.getGravidade() == Sessao.getGRAVIDADE_MEDIA() || sessao.getGravidade() == Sessao.getGRAVIDADE_ALTA()) {
@@ -127,14 +134,19 @@ public class GerenciarConsultaBean {
                 default:
                     System.out.println("opcão inválida");
             }
+            } while (opcao != 3);
+
+            sessao.setDataEncerramento(Calendar.getInstance().getTime());
+            sessao.setStatus(Sessao.getSTATUS_FINALIZADA());
             // atualiza o objeto sessao em tratamento
-            tratamento.getSessoes().remove(indexSessao);
-            tratamento.getSessoes().add(indexSessao, sessao);
+            tratamento.getSessoes().remove(sessaoOld);
+            tratamento.getSessoes().add(sessao);
             //atualiza s sessao e o tratameto no banco
             banco.salvarSessao(sessao);
             banco.salvarTratamento(tratamento);
+            banco.getExames().add(exame);
             System.out.println("Tratamento e sessão atualizados com sucesso");
-        } while (opcao != 3);
+
 
         return "Sessão finalizada com sucesso, até mais " + medico.getNome();
     }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clinicaveterinaria.main;
 
 import clinicaveterinaria.Menus.MenusInterativos;
@@ -80,20 +75,20 @@ public class ClinicaVeterinaria {
 
 //<editor-fold defaultstate="collapsed" desc="Conectar ao Banco">
 class AbrirBd {
-    
+
     BancoDeDados bd = new BancoDeDados();
-    
+
     public AbrirBd() {
-        
+
         bd.verificarChaveAcesso("f8cf8644");
-        
+
     }
-    
+
     public boolean verificar() {
         return bd.verificarChaveAcesso("f8cf8644");
-        
+
     }
-    
+
     public BancoDeDados getBd() {
         return bd;
     }
