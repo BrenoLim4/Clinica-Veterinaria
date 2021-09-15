@@ -1,6 +1,6 @@
-
 package clinicaveterinaria.Entidades;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -10,6 +10,7 @@ import java.util.Objects;
  * @author BrenoLim4
  */
 public abstract class Pessoa {
+
     private static final int SEXO_MASCULINO = 1;
     private static final int SEXO_FEMININO = 2;
     private String nome = "";
@@ -18,7 +19,6 @@ public abstract class Pessoa {
     private Date dataNascimento;
     private Integer idade;
     private Integer sexo;
-    
 
     public Pessoa() {
     }
@@ -58,12 +58,13 @@ public abstract class Pessoa {
 
     @Override
     public String toString() {
-        return   "\nNome: "           + nome 
-                +"\nTelefone: "       + telefone
-                +"\nDataNascimento: " + dataNascimento
-                +"\nIdade: "          + idade 
-                +"\nCpf: "            + cpf 
-                +"\nSexo: "           + getSexo();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return "\nNome: " + nome
+                + "\nTelefone: " + telefone
+                + "\nDataNascimento: " + format.format(dataNascimento)
+                + "\nIdade: " + idade
+                + "\nCpf: " + cpf
+                + "\nSexo: " + getSexo();
     }
 
     public String getNome() {
@@ -99,14 +100,16 @@ public abstract class Pessoa {
     public static int getSEXO_FEMININO() {
         return SEXO_FEMININO;
     }
-    public String getSexo(){
-        if(sexo.equals(SEXO_MASCULINO)){
+
+    public String getSexo() {
+        if (sexo.equals(SEXO_MASCULINO)) {
             return "Masculino";
-        }else{
+        } else {
             return "Feminino";
-        }        
+        }
     }
-    public void setSexo(int sexo){
+
+    public void setSexo(int sexo) {
         this.sexo = sexo;
     }
 
@@ -117,15 +120,10 @@ public abstract class Pessoa {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-    
+
     public Integer getIdade() {
-        
+
         return idade;
     }
-    
-    
-    
-    
-    
-    
+
 }

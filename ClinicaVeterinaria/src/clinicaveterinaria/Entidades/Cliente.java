@@ -50,9 +50,10 @@ public class Cliente extends Pessoa {
     public String toString() {
         return "Cliente {" 
                 + super.toString()
-                + "\nAnimais{"
-                + listaAnimal.toString()
-                + "\n  }"
+                + (listaAnimal.isEmpty() ? "" : 
+                    "\nAnimais{"
+                +  listaAnimal.toString()
+                + "\n  }")
                 + "\n}";
     }
 

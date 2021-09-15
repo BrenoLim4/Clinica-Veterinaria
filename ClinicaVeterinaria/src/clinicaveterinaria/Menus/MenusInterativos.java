@@ -1,6 +1,7 @@
 package clinicaveterinaria.Menus;
 
 import clinicaveterinaria.Beans.CadastroBean;
+import clinicaveterinaria.Beans.ConsultasBean;
 import clinicaveterinaria.Beans.GerenciarConsultaBean;
 import clinicaveterinaria.Beans.MarcarConsultaBean;
 import clinicaveterinaria.Entidades.Medico;
@@ -22,6 +23,8 @@ public class MenusInterativos {
     private static final int CADASTRAR_ANIMAL   = 3;
     private static final int CADASTRAR_MEDICO   = 4;
     private static final int ATUALIZAR_CADASTRO = 5;
+    private static final int CONSULTAR_CLIENTE  = 6;
+    private static final int CONSULTAR_MEDICO   = 7;
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Funções do medico">
     private static final int GERENCIAR_CONSULTA = 1;
@@ -29,7 +32,7 @@ public class MenusInterativos {
     private static final int CONSULTAR_PACIENTES = 3;
     private static final int CONSULTAR_TRATAMENTOS = 4;
     //</editor-fold>
-    private static final int SAIR = 6;
+    private static final int SAIR = 10;
     private static BancoDeDados banco;
     private Medico medico;
 
@@ -47,11 +50,16 @@ public class MenusInterativos {
                     + "\n[3] - Cadastrar Animal"
                     + "\n[4] - Cadastrar Médico"
                     + "\n[5] - Atualizar Cadastro"
-                    + "\n[6] - Sair");
+                    + "\n[6] - consultar Cientes"
+                    + "\n[7] - consultar Medico"
+                    + "\n[10] - Sair");
              buttom = sc.nextInt();
             CadastroBean cadastro = null;
+            ConsultasBean consultar = null;
             if (buttom >= CADASTRAR_CLIENTE && buttom <= CADASTRAR_MEDICO) {
                 cadastro = new CadastroBean(banco);
+            }else if(buttom == CONSULTAR_CLIENTE || buttom == CONSULTAR_MEDICO){
+                consultar = new ConsultasBean(banco);
             }
             switch (buttom) {
                 case MARCAR_CONSULTA:
@@ -69,6 +77,13 @@ public class MenusInterativos {
                     break;
                 case ATUALIZAR_CADASTRO:
                     //em desenvolvimento
+                    break;
+                case CONSULTAR_CLIENTE:                    
+                    consultar.consultarListaClientes();
+                    break;
+                case CONSULTAR_MEDICO:
+                    consultar = new ConsultasBean(banco);
+                    consultar.consultarListaMedico();
                     break;
                 case SAIR:
                     sc.nextLine();

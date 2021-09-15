@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package clinicaveterinaria.Entidades;
 
 import clinicaveterinaria.EntidadesLogicas.Sessao;
@@ -12,7 +8,7 @@ import java.util.Objects;
 
 /**
  *
- * @author BrenoLim4
+ * @author BrenoLima
  */
 public class Medico extends Pessoa {
     private String especialidade;
@@ -54,7 +50,10 @@ public class Medico extends Pessoa {
 
     @Override
     public String toString() {
-        return "Medico{" + "especialidade=" + especialidade + ", consultas=" + consultas + ", pacientes=" + pacientes + '}';
+        return "Medico{"
+                + super.toString()
+                + "\nespecialidade: " + especialidade
+                + "}\n";
     }
 
     public String getEspecialidade() {
