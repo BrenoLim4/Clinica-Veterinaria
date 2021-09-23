@@ -13,6 +13,9 @@ import java.util.Objects;
  * @author BrenoLima
  */
 public class Tratamento {
+    //criar códico do tratamento semelhante ao de sessão, seria: (banco.getTratamentos.size +1)
+    //para não precisar setar novamente os atributos de cliente, animal e medico em sessão
+    private Integer codigo;
     private List<Sessao> sessoes   = new ArrayList<>();
     private Boolean      concluido = false;
     private Cliente      cliente;
@@ -140,7 +143,19 @@ public class Tratamento {
     public void setSolicitaExame(Boolean solicitaExame) {
         this.solicitaExame = solicitaExame;
     }
+    
+    public Integer getCodigo() {
+        return codigo;
+    }
+    
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
+    }
 //</editor-fold>
+
+    
+
+    
 
    
     

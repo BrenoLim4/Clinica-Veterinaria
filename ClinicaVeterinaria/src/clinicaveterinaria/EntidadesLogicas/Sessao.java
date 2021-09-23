@@ -27,8 +27,10 @@ public class Sessao extends Tratamento {
     private static final int STATUS_FINALIZADA = 6;
     
     //
+    //
     private final Random gerador        = new Random();
     private String       codigoSessao   = "";
+    private Integer      codigoTratamento;
     private Boolean      encerrada      = false; 
     private int          status         = STATUS_REGISTRADA;
     private Boolean      examePendente  = false;
@@ -163,6 +165,14 @@ public class Sessao extends Tratamento {
 
     public int getStatus() {
         return status;
+    }
+
+    public Integer getCodigoTratamento() {
+        return codigoTratamento;
+    }
+
+    public void setCodigoTratamento(Integer codigoTratamento) {
+        this.codigoTratamento = codigoTratamento;
     }
     
     public static int getSTATUS_REGISTRADA() {

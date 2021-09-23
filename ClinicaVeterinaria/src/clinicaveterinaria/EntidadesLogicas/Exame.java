@@ -16,6 +16,7 @@ import java.util.Objects;
  * @author BrenoLima
  */
 public class Exame {
+    private Integer codicoTratamento;
     private Animal  paciente;
     private Cliente responsavel;
     private Medico  solicitante;
@@ -64,10 +65,7 @@ public class Exame {
         if (!Objects.equals(this.dataHoraSolicitacao, other.dataHoraSolicitacao)) {
             return false;
         }
-        if (!Objects.equals(this.dataHoraResultado, other.dataHoraResultado)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.dataHoraResultado, other.dataHoraResultado);
     }
 
     @Override
@@ -95,6 +93,14 @@ public class Exame {
         return solicitante;
     }
 
+    public Integer getCodicoTratamento() {
+        return codicoTratamento;
+    }
+
+    public void setCodicoTratamento(Integer codicoTratamento) {
+        this.codicoTratamento = codicoTratamento;
+    }
+    
     public void setSolicitante(Medico solicitante) {
         this.solicitante = solicitante;
     }
