@@ -15,15 +15,14 @@ public class Conexao {
 
     public Connection getConexao() {
         String url = "jdbc:mysql://127.0.0.1:3306/clinica_veterinaria";
+        //String url ="jdbc:mysql://localhost:3306/clinica_veterinaria";home-Ofice
         String user = "root";
         String password = "";
-        try {
-            Connection conexao = DriverManager.getConnection(url, user, password);
-            return conexao;
+        try {             
+            return DriverManager.getConnection(url, user, password);
         } catch (SQLException ex) {
             System.out.println("Não foi possivel encerrar conexão");
-            Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            ex.printStackTrace();}
 
         return null;
     }
