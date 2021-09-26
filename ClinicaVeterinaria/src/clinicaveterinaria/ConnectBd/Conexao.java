@@ -14,10 +14,10 @@ import java.util.logging.Logger;
 public class Conexao {
 
     public Connection getConexao() {
-        String url = "jdbc:mysql://127.0.0.1:3306/clinica_veterinaria";
-        //String url ="jdbc:mysql://localhost:3306/clinica_veterinaria";home-Ofice
+        //String url = "jdbc:mysql://127.0.0.1:3306/clinica_veterinaria";
+        String url ="jdbc:mysql://localhost:3306/clinica_veterinaria";//home-Ofice
         String user = "root";
-        String password = "";
+        String password = "root";
         try {             
             return DriverManager.getConnection(url, user, password);
         } catch (SQLException ex) {

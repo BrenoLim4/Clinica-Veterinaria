@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clinicaveterinaria.Entidades;
+package clinicaveterinaria.ConnectBd;
 
 /**
  *
- * @author BrenoLim4
+ * @author User
  */
-public class Secretaria extends Pessoa {
-    
-    public Secretaria() {
-        
+public class test {
+    public static void main(String[] args) {
+        Conexao conn = new Conexao();
+        conn.getConexao();
     }
     
 }

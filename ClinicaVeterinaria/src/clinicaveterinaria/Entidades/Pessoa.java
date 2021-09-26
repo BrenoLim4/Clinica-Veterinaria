@@ -1,39 +1,113 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package clinicaveterinaria.Entidades;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author BrenoLim4
+ * @author User
  */
-public abstract class Pessoa {
+@Entity
+@Table(name = "pessoa", schema="clinica_veterinaria")
+@XmlRootElement
+public abstract class Pessoa implements Serializable {
 
-    private static final int SEXO_MASCULINO = 1;
-    private static final int SEXO_FEMININO = 2;
-    private String nome = "";
-    private String telefone = "";
-    private String cpf = "";
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "cpf")
+    private String cpf;
+    @Basic(optional = false)
+    @Column(name = "nome")
+    private String nome;
+    @Basic(optional = false)
+    @Column(name = "telefone")
+    private String telefone;
+    @Basic(optional = false)
+    @Column(name = "dataNascimento")
+    @Temporal(TemporalType.DATE)
     private Date dataNascimento;
+    @Basic(optional = false)
+    @Column(name = "idade")
     private Integer idade;
+    @Column(name="sexo_id")
     private Integer sexo;
-
+    @Column(name="tipo_pessoa_id")
+    private Integer tipoPessoa;
+    
     public Pessoa() {
+    }
+
+    public Pessoa(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public Pessoa(String cpf, String nome, String telefone, Date dataNascimento, int idade) {
+        this.cpf = cpf;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.dataNascimento = dataNascimento;
+        this.idade = idade;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public Integer getIdade() {
+        return idade;
+    }
+
+    public Integer getSexo() {
+        return sexo;
+    }
+
+    public Integer getTipoPessoa() {
+        return tipoPessoa;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.nome);
-        hash = 89 * hash + Objects.hashCode(this.telefone);
-        hash = 89 * hash + Objects.hashCode(this.idade);
+        int hash = 0;
+        hash += (cpf != null ? cpf.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
+        
         if (this == obj) {
             return true;
         }
@@ -54,76 +128,12 @@ public abstract class Pessoa {
             return false;
         }
         return Objects.equals(this.idade, other.idade);
+    
     }
 
     @Override
     public String toString() {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        return "\nNome: " + nome
-                + "\nTelefone: " + telefone
-                + "\nDataNascimento: " + format.format(dataNascimento)
-                + "\nIdade: " + idade
-                + "\nCpf: " + cpf
-                + "\nSexo: " + getSexo();
+        return "clinicaveterinaria.Entidades.Pessoa_1[ cpf=" + cpf + " ]";
     }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public Date getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(Date dataNascimento) {
-        Date dataAtual = Calendar.getInstance().getTime();
-        idade = (dataAtual.getYear() - dataNascimento.getYear());
-        this.dataNascimento = dataNascimento;
-    }
-
-    public static int getSEXO_MASCULINO() {
-        return SEXO_MASCULINO;
-    }
-
-    public static int getSEXO_FEMININO() {
-        return SEXO_FEMININO;
-    }
-
-    public String getSexo() {
-        if (sexo.equals(SEXO_MASCULINO)) {
-            return "Masculino";
-        } else {
-            return "Feminino";
-        }
-    }
-
-    public void setSexo(int sexo) {
-        this.sexo = sexo;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public Integer getIdade() {
-
-        return idade;
-    }
-
+    
 }
